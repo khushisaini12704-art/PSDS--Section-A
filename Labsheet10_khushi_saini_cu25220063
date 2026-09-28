@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+
+int digitSum(int x)
+{
+    int sum = 0;
+
+    if (x < 0)
+        x = -x;
+
+    while (x > 0)
+    {
+        sum += x % 10;
+        x /= 10;
+    }
+
+    return sum;
+}
+
+void solve()
+{
+    int N;
+
+    cout << "Enter N: ";
+    cin >> N;
+
+    vector<int> nums(N);
+
+    cout << "Enter array elements: ";
+    for (int i = 0; i < N; i++)
+    {
+        cin >> nums[i];
+    }
+
+    map<int, long long> frequency;
+    long long answer = 0;
+
+    for (int i = 0; i < N; i++)
+    {
+        int sum = digitSum(nums[i]);
+
+        // Every previous element with same digit sum
+        // forms one pair with current element.
+        answer += frequency[sum];
+
+        frequency[sum]++;
+    }
+
+    cout << "Number of special pairs: " << answer << endl;
+}
+
+int main()
+{
+    solve();
+
+    return 0;
+}
